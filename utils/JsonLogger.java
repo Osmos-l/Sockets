@@ -78,5 +78,7 @@ public class JsonLogger {
 		JsonLogger logger = getLogger();
 
 		JsonObject log = logger.reqToJson(host, port, proto, type, login, result);
+
+		// java.nio
 	}
 }

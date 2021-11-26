@@ -18,7 +18,7 @@ public class UDPServer extends Server {
 
     private DatagramPacket receiver;
 
-    public UDPServer(int port) throws IOException {
+    public UDPServer(int port) {
         super("UPD", port);
     }
 
@@ -47,22 +47,7 @@ public class UDPServer extends Server {
         String input = new String(receiver.getData(), 0, receiver.getLength());
         System.out.println("Request : " + input);
 
-        handleInput(input);
-    }
-
-    private void handleInput(String input) throws IOException {
-        String output;
-        try {
-            Request req = new Request(input);
-            getReqHandler().setRequest(req);
-            output = getReqHandler().execute();
-
-            JsonLogger.log(getHost(), getPort(), getProtocole(), req.getCommand().toString(), req.getLogin(),
-                    req.getPassword());
-        } catch (Exception e) {
-            output = TypeResponse.ERROR.getMessage() + " " + e.getMessage();
-        }
-
+        String output = handleInput(input);
         sendOutput(output);
     }
 

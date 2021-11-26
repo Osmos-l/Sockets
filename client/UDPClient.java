@@ -4,9 +4,7 @@ import java.io.IOException;
 import java.net.*;
 import java.util.Scanner;
 
-public class UDPClient extends Thread {
-
-    private int port;
+public class UDPClient extends Client {
 
     private DatagramSocket socket;
 
@@ -14,73 +12,48 @@ public class UDPClient extends Thread {
 
     private DatagramPacket receiver;
 
-    private Scanner scanner;
-
     private InetAddress destination;
 
     public UDPClient(int port) throws IOException {
-        this.port = port;
+        super("UDP", port);
 
-        launchServer();
+        start();
     }
 
-    public void launchServer() throws IOException {
-        initSocket();
-
-        initReceiver();
-
-        initScanner();
-
-        initDestination();
-
-        live();
-    }
-
-    private void initSocket() throws SocketException {
+    @Override
+    public void init() throws IOException {
+        super.init();
         socket = new DatagramSocket();
-    }
-
-    private void initReceiver() {
         receiver = new DatagramPacket(tampon, tampon.length);
+        destination = InetAddress.getByName(getHost());
     }
 
-    private void initScanner() {
-        scanner = new Scanner(System.in);
+    public void start() throws IOException {
+        super.start();
+        init();
     }
 
-    private void initDestination() throws UnknownHostException {
-        destination = InetAddress.getByName("localhost");
+    public void handleInput(String input) throws IOException {
+        byte [] octets = input.getBytes();
+        DatagramPacket request = new DatagramPacket(octets, octets.length, destination, getPort());;
+        socket.send(request);
+
+        sendRequestToServer();
     }
 
-    private DatagramPacket createRequestFromString(String toAdd) {
-        byte [] octets = toAdd.getBytes();
-        return new DatagramPacket(octets, octets.length, destination, port);
+    private void sendRequestToServer() throws IOException {
+        socket.receive(receiver);
+        String output = new String(receiver.getData(), 0, receiver.getLength());
+        System.out.println("Response : " + output);
+
+        clearReceiver();
     }
 
-    private void live() throws IOException {
-        String chaine = "";
-        System.out.println("Tapez vos phrases ou FIN pour arrêter :");
-
-        while (!chaine.equalsIgnoreCase("FIN")) {
-            // lecture clavier
-            chaine = scanner.nextLine();
-
-            DatagramPacket request = createRequestFromString(chaine);
-            socket.send(request);
-
-            // attente et réception d'un datagramme UDP
-            socket.receive(receiver);
-
-            // extraction des données
-            String res = new String(receiver.getData(), 0, receiver.getLength());
-
-            System.out.println("Response : " + res);
-
-            // on replace la taille du tampon au max
-            // elle a été modifiée lors de la réception
-            receiver.setLength(tampon.length);
-        }
+    private void clearReceiver() {
+        receiver.setLength(tampon.length);
     }
+
+    public void afterLive() {};
 
     public static void main(String[] args) throws Exception {
         UDPClient UDPClient = new UDPClient(40000);

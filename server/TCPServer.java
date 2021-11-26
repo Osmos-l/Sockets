@@ -17,7 +17,7 @@ public class TCPServer extends Server {
 
     private ServerSocket serverSocket;
 
-    public TCPServer(int port) throws IOException {
+    public TCPServer(int port) {
         super("TCP", port);
     }
 
@@ -45,24 +45,11 @@ public class TCPServer extends Server {
                 input = entreeSocket.readLine();
 
                 if (input != null) {
-
-                    String output;
-                    try {
-                        Request req = new Request(input);
-                        getReqHandler().setRequest(req);
-                        output = getReqHandler().execute();
-
-                        JsonLogger.log(getHost(), getPort(), getProtocole(), req.getCommand().toString(), req.getLogin(),
-                                req.getPassword());
-                    } catch (Exception e) {
-                        output = TypeResponse.ERROR.getMessage() + " " + e.getMessage();
-                    }
-
+                    String output = handleInput(input);
                     sortieSocket.println(output);
                 }
             }
 
-            // on ferme nous aussi la connexion
             connection.close();
         }
     }

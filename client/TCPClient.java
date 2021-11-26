@@ -5,11 +5,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.net.Socket;
-import java.util.Scanner;
 
-public class TCPClient {
-
-    private int port;
+public class TCPClient extends Client {
 
     private Socket socket;
 
@@ -17,54 +14,45 @@ public class TCPClient {
 
     private PrintStream sortieSocket;
 
-    private Scanner scanner;
-
     public TCPClient(int port) throws IOException {
-        this.port = port;
+        super("TCP", port);
 
-        launchServer();
+        start();
     }
 
-    private void initSocket() throws IOException {
-        socket = new Socket("localhost", port);
-    }
+    @Override
+    public void init() throws IOException {
+        super.init();
 
-    private void initBuffer() throws IOException {
+        socket = new Socket(getHost(), getPort());
+
         entreeSocket = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         sortieSocket = new PrintStream(socket.getOutputStream());
     }
 
-    private void initScanner() {
-        scanner = new Scanner(System.in);
+    public void start() throws IOException {
+        super.start();
+        init();
     }
 
-    private void listen() throws IOException {
+    private void sendInputToServer(String input) {
+        sortieSocket.println(input);
+    }
 
-        String chaine = "";
-        System.out.println("Tapez vos phrases ou FIN pour arrêter :");
+    private String getOutputFromServer() throws IOException {
+        return entreeSocket.readLine();
+    }
 
-        while (!chaine.equalsIgnoreCase("FIN")) {
-            // lecture clavier
-            chaine = scanner.nextLine();
-            sortieSocket.println(chaine); // on envoie la chaine au serveur
+    public void handleInput(String input) throws IOException {
+        sendInputToServer(input);
 
-            // lecture d'une chaine envoyée à travers la connexion socket
-            chaine = entreeSocket.readLine();
-            System.out.println("Chaine reçue : "+chaine);
-        }
+        String output = getOutputFromServer();
+        System.out.println("Response : " + output);
+    }
 
-        // on ferme nous aussi la connexion
+    @Override
+    public void afterLive() throws IOException {
         socket.close();
-    }
-
-    private void launchServer() throws IOException {
-        initSocket();
-
-        initBuffer();
-
-        initScanner();
-
-        listen();
     }
 
     public static void main(String args[]) {

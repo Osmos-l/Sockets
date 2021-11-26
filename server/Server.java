@@ -1,6 +1,9 @@
 package server;
 
+import enums.TypeResponse;
+import models.Request;
 import models.RequestHandler;
+import utils.JsonLogger;
 
 import java.io.IOException;
 
@@ -19,6 +22,21 @@ public abstract class Server extends Thread {
         this.port = port;
 
         reqHandler = new RequestHandler();
+    }
+
+    public String handleInput(String input) {
+        String output;
+        try {
+            Request req = new Request(input);
+            reqHandler.setRequest(req);
+            output = reqHandler.execute();
+
+            JsonLogger.log(host, port, protocole, req.getCommand().toString(), req.getLogin(),
+                    req.getPassword());
+        } catch (Exception e) {
+            output = TypeResponse.ERROR.getMessage() + " " + e.getMessage();
+        }
+        return output;
     }
 
     public String getProtocole() {
