@@ -1,21 +1,17 @@
-package server;
+package models;
 
-import enums.TypeResponse;
-import models.Request;
-import models.RequestHandler;
-import utils.JsonLogger;
+import models.Server;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
-import java.net.Authenticator;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-public class TCPServer extends Server {
+public abstract class TCPServer extends Server {
 
-    private ServerSocket serverSocket;
+    private ServerSocket socket;
 
     public TCPServer(int port) {
         super("TCP", port);
@@ -30,12 +26,12 @@ public class TCPServer extends Server {
 
     @Override
     public void init() throws IOException {
-        serverSocket = new ServerSocket(getPort());
+        socket = new ServerSocket(getPort());
     }
 
     private void listen() throws IOException {
-        while(true) {
-            Socket connection = serverSocket.accept();
+        while (true) {
+            Socket connection = socket.accept();
 
             BufferedReader entreeSocket = new BufferedReader(new InputStreamReader(connection.getInputStream()));
             PrintStream sortieSocket = new PrintStream(connection.getOutputStream());
@@ -45,7 +41,8 @@ public class TCPServer extends Server {
                 input = entreeSocket.readLine();
 
                 if (input != null) {
-                    String output = handleInput(input);
+                    String output = onRequest(connection, input);
+
                     sortieSocket.println(output);
                 }
             }
@@ -53,4 +50,13 @@ public class TCPServer extends Server {
             connection.close();
         }
     }
+
+    /**
+     * Business logic
+     * @param connection
+     * @param request
+     * @return Request response
+     */
+    public abstract String onRequest(Socket connection, String request);
+
 }

@@ -1,4 +1,4 @@
-package client;
+package models;
 
 import java.io.IOException;
 import java.util.Scanner;

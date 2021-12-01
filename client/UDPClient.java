@@ -1,8 +1,9 @@
 package client;
 
+import models.Client;
+
 import java.io.IOException;
 import java.net.*;
-import java.util.Scanner;
 
 public class UDPClient extends Client {
 

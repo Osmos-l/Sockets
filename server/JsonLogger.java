@@ -1,5 +1,17 @@
-package utils;
+package server;
 
+import models.TCPServer;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintStream;
+import java.net.Socket;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.Date;
 
 import javax.json.Json;
@@ -12,7 +24,7 @@ import javax.json.JsonObjectBuilder;
  * @author torguet
  *
  */
-public class JsonLogger {
+public class JsonLogger extends TCPServer {
 	
 	// Attributs à compléter
 
@@ -20,7 +32,7 @@ public class JsonLogger {
 	 * Constructeur à compléter
 	 */
 	private JsonLogger() {
-		
+		super(3244);
 	}
 	
 	/**
@@ -60,6 +72,7 @@ public class JsonLogger {
 	private static JsonLogger getLogger() {
 		if (logger == null) {
 			logger = new JsonLogger();
+			logger.start();
 		}
 		return logger;
 	}
@@ -79,6 +92,36 @@ public class JsonLogger {
 
 		JsonObject log = logger.reqToJson(host, port, proto, type, login, result);
 
-		// java.nio
+		try {
+			Socket socket = new Socket("localhost", 3244);
+
+			BufferedReader entreeSocket = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+			PrintStream sortieSocket = new PrintStream(socket.getOutputStream());
+
+			sortieSocket.println(log.toString());
+
+			System.out.println("LOG Response:" + entreeSocket.readLine());
+
+			socket.close();
+		} catch (IOException e) {
+			System.out.println("LOG Response:" + e.getMessage());
+		}
+
 	}
+
+	@Override
+	public String onRequest(Socket connection, String request) {
+		Path path = Paths.get("./test.txt");
+		String output;
+		try {
+			request = request + "\n";
+			Files.write(path, request.getBytes(StandardCharsets.UTF_8),
+					StandardOpenOption.CREATE, StandardOpenOption.APPEND);
+			output = "DONE";
+		} catch (IOException e) {
+			output = "ERROR: " + e.getMessage();
+		}
+		return output;
+	}
+
 }

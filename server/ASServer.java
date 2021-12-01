@@ -1,18 +1,21 @@
 package server;
 
 import java.io.IOException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 public class ASServer {
 
+    private Thread tcp;
+
+    private Thread udp;
+
     public ASServer(int port) throws IOException {
-        ExecutorService executor = Executors.newCachedThreadPool();
+        tcp = new AsTCPServer(port);
+        udp = new AsUDPServer(port);
 
-        executor.execute(new TCPServer(port));
-        executor.execute(new UDPServer(port));
+        tcp.start();
+        udp.start();
 
-        while (!executor.isTerminated());
+        while (tcp.isAlive() || udp.isAlive());
     }
 
     public static void main(String[] args) {
