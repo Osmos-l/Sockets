@@ -10,6 +10,11 @@ public class Request {
 
     private String password;
 
+    /**
+     * L'état initial de l'objet
+     * @param toTransform la requête sous format string séparé par un caractère " "
+     * @throws Exception Bad format ou commande inconnue
+     */
     public Request(String toTransform) throws Exception {
         String[] splitted = toTransform.split(" ");
 

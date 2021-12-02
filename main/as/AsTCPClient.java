@@ -11,7 +11,7 @@ public class AsTCPClient extends ConsoleScanner {
     private TCPClient tcpClient;
 
     /**
-     * État initial du projet
+     * État initial de l'objet
      * @param host
      * @param port Le port sur lequel lancer le client
      * @throws IOException

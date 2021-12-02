@@ -19,6 +19,12 @@ public class TCPClient {
 
     private PrintStream sortieSocket;
 
+    /**
+     * État initial de l'objet
+     * @param host L'host
+     * @param port Le port sur lequel on souhaite communiquer
+     * @throws IOException
+     */
     public TCPClient(String host, int port) throws IOException {
         socket = new Socket(host, port);
 

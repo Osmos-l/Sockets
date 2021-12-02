@@ -8,11 +8,15 @@ public abstract class Server extends Thread {
 
     private int port;
 
+    /**
+     * État initial de l'objet
+     * @param protocole Le protocole "UDP" | "TCP"
+     * @param port Le port du serveur
+     */
     public Server(String protocole, int port) {
         this.protocole = protocole;
         this.port = port;
     }
-
 
     public int getPort() {
         return port;

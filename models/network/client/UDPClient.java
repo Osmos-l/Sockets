@@ -17,6 +17,13 @@ public class UDPClient {
 
     private int port;
 
+    /**
+     * État initial de l'objet
+     * @param host L'host
+     * @param port Le port sur lequel on souhaite communiquer
+     * @throws SocketException
+     * @throws UnknownHostException
+     */
     public UDPClient(String host, int port) throws SocketException, UnknownHostException {
         this.port = port;
 
@@ -25,12 +32,21 @@ public class UDPClient {
         destination = InetAddress.getByName(host);
     }
 
+    /**
+     * Envoie un message au serveur distant
+     * @param message Le message à envoyer
+     * @throws IOException
+     */
     public void sendMessage(String message) throws IOException {
         byte [] octets = message.getBytes();
         DatagramPacket request = new DatagramPacket(octets, octets.length, destination, port);
         socket.send(request);
     }
 
+    /**
+     * Récupère la dernière réponse du serveur distant
+     * @return la dernière réponse
+     */
     public String readResponse() {
         String output;
         try {
@@ -43,6 +59,9 @@ public class UDPClient {
         return output;
     }
 
+    /**
+     * Coupe la communication avec le serveur distant
+     */
     public void stop() {
         socket.close();
     }

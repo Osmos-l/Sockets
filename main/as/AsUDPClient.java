@@ -12,10 +12,20 @@ public class AsUDPClient extends ConsoleScanner {
 
     private UDPClient udpClient;
 
+    /**
+     * État initial de l'objet
+     * @param host L'host
+     * @param port Le port sur lequel on souhaite communiquer
+     * @throws SocketException
+     * @throws UnknownHostException
+     */
     public AsUDPClient(String host, int port) throws SocketException, UnknownHostException {
         udpClient = new UDPClient(host, port);
     }
 
+    /**
+     * Lance le Scanner dans la console
+     */
     public void run() {
         super.askUserInput();
     }
@@ -36,7 +46,6 @@ public class AsUDPClient extends ConsoleScanner {
         System.out.println("Déjà ... ?");
         udpClient.stop();
     }
-
 
     public static void main(String[] args) {
         try {

@@ -14,6 +14,10 @@ public abstract class UDPServer extends Server {
 
     private DatagramPacket receiver;
 
+    /**
+     * État initial de l'objet
+     * @param port Le port sur lequel tourne le serveur
+     */
     public UDPServer(int port) {
         super("UDP", port);
     }
@@ -32,6 +36,10 @@ public abstract class UDPServer extends Server {
         receiver = new DatagramPacket(tampon, tampon.length);
     }
 
+    /**
+     * Coeur du serveur. Recupère, distribue et renvoie les requêtes
+     * @throws IOException
+     */
     private void listen() throws IOException {
         while (true) {
             socket.receive(receiver);
@@ -51,5 +59,11 @@ public abstract class UDPServer extends Server {
         }
     }
 
+    /**
+     * Business logic when incoming request
+     * @param receiver
+     * @param request
+     * @return String response
+     */
     public abstract String onRequest(DatagramPacket receiver, String request);
 }

@@ -13,6 +13,10 @@ public abstract class TCPServer extends Server {
 
     private ServerSocket socket;
 
+    /**
+     * État initial de l'objet
+     * @param port Le port sur lequel tourne le serveur
+     */
     public TCPServer(int port) {
         super("TCP", port);
     }
@@ -29,6 +33,10 @@ public abstract class TCPServer extends Server {
         socket = new ServerSocket(getPort());
     }
 
+    /**
+     * Coeur du serveur. Recupère, distribue et renvoie les requêtes
+     * @throws IOException
+     */
     private void listen() throws IOException {
         while (true) {
             Socket connection = socket.accept();

@@ -1,5 +1,8 @@
 package models.enums;
 
+/**
+ * L'ensemble des réponses d'un serveur
+ */
 public enum TypeResponse {
     CREATED("DONE"),
     FOUND("GOOD"),
