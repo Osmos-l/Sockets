@@ -10,9 +10,14 @@ public class AsTCPClient extends ConsoleScanner {
 
     private TCPClient tcpClient;
 
+    /**
+     * État initial du projet
+     * @param host
+     * @param port Le port sur lequel lancer le client
+     * @throws IOException
+     */
     public AsTCPClient(String host, int port) throws IOException {
         tcpClient = new TCPClient(host,port);
-
     }
 
     /**
@@ -27,6 +32,12 @@ public class AsTCPClient extends ConsoleScanner {
         tcpClient.sendRequest(input);
 
         System.out.println(tcpClient.readResponse());
+    }
+
+    @Override
+    public void onUserLeave() {
+        System.out.println("Déjà ... ?");
+        tcpClient.stop();
     }
 
     public static void main(String args[]) {

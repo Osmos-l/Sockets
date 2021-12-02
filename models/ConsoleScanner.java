@@ -12,6 +12,9 @@ public abstract class ConsoleScanner {
         scanner = new Scanner(System.in);
     }
 
+    /**
+     * Demande à l'utilisateur de saisir une phrase ou, de quitter le system
+     */
     public void askUserInput() {
         System.out.println("Tapez vos phrases ou "+ BREAKPOINT +" pour arrêter :");
         String input = "";
@@ -19,6 +22,8 @@ public abstract class ConsoleScanner {
             input = scanner.nextLine();
             if (!input.equalsIgnoreCase(BREAKPOINT)) {
                 onUserInput(input);
+            } else {
+                onUserLeave();
             }
         }
     }
@@ -28,4 +33,9 @@ public abstract class ConsoleScanner {
      * @param input la phrase saisie
      */
     public abstract void onUserInput(String input);
+
+    /**
+     * Lorsque l'utilisateur décide de quitter
+     */
+    public abstract void onUserLeave();
 }

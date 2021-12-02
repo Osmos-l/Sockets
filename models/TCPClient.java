@@ -1,7 +1,6 @@
 package models;
 
 import enums.TypeResponse;
-import utils.Config;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -44,6 +43,20 @@ public class TCPClient {
             return entreeSocket.readLine();
         } catch (IOException e) {
             return TypeResponse.ERROR.getMessage() + " " + e.getMessage();
+        }
+    }
+
+    /**
+     * Close the connection
+     */
+    public void stop() {
+        try {
+            socket.close();
+
+            entreeSocket.close();
+            sortieSocket.close();
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
         }
     }
 
