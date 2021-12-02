@@ -1,6 +1,7 @@
 package client;
 
 import models.Client;
+import utils.Config;
 
 import java.io.IOException;
 import java.net.*;
@@ -57,6 +58,6 @@ public class UDPClient extends Client {
     public void afterLive() {};
 
     public static void main(String[] args) throws Exception {
-        UDPClient UDPClient = new UDPClient(40000);
+        UDPClient UDPClient = new UDPClient(Config.getAsServerPort());
     }
 }

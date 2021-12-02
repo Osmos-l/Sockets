@@ -3,16 +3,32 @@ package models;
 import enums.TypeResponse;
 import utils.ListeAuth;
 
+/**
+ * Traitement dynamiquement les requêtes d'authentification
+ */
 public class RequestHandler {
 
+    /**
+     * La requête à traiter
+     */
     private Request request;
 
+    /**
+     * Base de données
+     */
     private final ListeAuth db;
 
+    /**
+     * État initial de l'objet
+     */
     public RequestHandler() {
         db = ListeAuth.getInstance();
     }
 
+    /**
+     * Lance de façon dynamique l'action que doit effectuer la requête.
+     * @return String La réponse adaptée [enum TypeResponse + String]
+     */
     public String execute() {
         String login = request.getLogin();
         String password = request.getPassword();
@@ -48,7 +64,8 @@ public class RequestHandler {
                 : TypeResponse.NOT_FOUND.getMessage();
     }
 
-    public void setRequest(Request req) {
+    public RequestHandler setRequest(Request req) {
         request = req;
+        return this; // Make life easier
     }
 }

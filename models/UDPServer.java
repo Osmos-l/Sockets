@@ -12,7 +12,6 @@ public abstract class UDPServer extends Server {
 
     private DatagramPacket receiver;
 
-
     public UDPServer(int port) {
         super("UDP", port);
     }

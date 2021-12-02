@@ -1,6 +1,7 @@
 package client;
 
 import models.Client;
+import utils.Config;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -59,7 +60,7 @@ public class TCPClient extends Client {
 
     public static void main(String args[]) {
         try {
-            TCPClient clientManager = new TCPClient(40000);
+            TCPClient clientManager = new TCPClient(Config.getAsServerPort());
         } catch (IOException e) {
             System.out.println("ERREUR: " + e.getMessage());
         }

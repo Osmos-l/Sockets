@@ -4,13 +4,24 @@ import enums.TypeResponse;
 import models.Request;
 import models.RequestHandler;
 import models.TCPServer;
+import utils.Logger;
 
 import java.net.Socket;
 
+/**
+ * Serveur TCP d'authentification
+ */
 public class AsTCPServer extends TCPServer {
 
+    /**
+     * Permet de gérer les requêtes que le serveur reçoit
+     */
     private RequestHandler reqHandler;
 
+    /**
+     * État initial du Serveur TCP d'authentification
+     * @param port Le port du Serveur TCP
+     */
     public AsTCPServer(int port) {
         super(port);
 
@@ -22,10 +33,10 @@ public class AsTCPServer extends TCPServer {
         String output;
         try {
             Request req = new Request(input);
-            reqHandler.setRequest(req);
-            output = reqHandler.execute();
+            output = reqHandler.setRequest(req)
+                    .execute();
 
-            JsonLogger.log(connection.getInetAddress().getHostAddress(), connection.getPort(), "TCP",
+            Logger.log(connection.getInetAddress().getHostAddress(), connection.getPort(), "TCP",
                     req.getCommand().toString(), req.getLogin(), output);
         } catch (Exception e) {
             output = TypeResponse.ERROR.getMessage() + " " + e.getMessage();
@@ -33,6 +44,4 @@ public class AsTCPServer extends TCPServer {
 
         return output;
     }
-
-
 }

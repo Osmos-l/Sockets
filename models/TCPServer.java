@@ -41,8 +41,9 @@ public abstract class TCPServer extends Server {
                 input = entreeSocket.readLine();
 
                 if (input != null) {
+                    System.out.println("Incoming request ...");
                     String output = onRequest(connection, input);
-
+                    System.out.println(output + "\n");
                     sortieSocket.println(output);
                 }
             }
@@ -52,10 +53,10 @@ public abstract class TCPServer extends Server {
     }
 
     /**
-     * Business logic
+     * Business logic when incoming request
      * @param connection
      * @param request
-     * @return Request response
+     * @return String response
      */
     public abstract String onRequest(Socket connection, String request);
 
