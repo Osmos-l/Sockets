@@ -1,6 +1,6 @@
-package models;
+package models.network.server;
 
-import models.Server;
+import models.network.server.Server;
 
 import java.io.BufferedReader;
 import java.io.IOException;

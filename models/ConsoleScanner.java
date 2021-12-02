@@ -4,10 +4,16 @@ import java.util.Scanner;
 
 public abstract class ConsoleScanner {
 
+    /**
+     * Le mot qui permet de mettre fin à l'execution
+     */
     private final String BREAKPOINT = ".fin";
 
     private Scanner scanner;
 
+    /**
+     * État initial de l'objet
+     */
     public ConsoleScanner() {
         scanner = new Scanner(System.in);
     }

@@ -1,4 +1,6 @@
-package models;
+package models.network.server;
+
+import models.network.server.Server;
 
 import java.io.IOException;
 import java.net.DatagramPacket;
@@ -36,8 +38,9 @@ public abstract class UDPServer extends Server {
 
             String input = new String(receiver.getData(), 0, receiver.getLength());
 
+            System.out.println("Incoming request ...");
             String output = onRequest(receiver, input);
-            System.out.println("Response : " + output);
+            System.out.println(output + "\n");
 
             DatagramPacket response = new DatagramPacket(output.getBytes(), output.getBytes().length,
                     receiver.getAddress(), receiver.getPort());

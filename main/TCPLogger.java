@@ -1,7 +1,6 @@
-package server;
+package main;
 
-import models.TCPServer;
-import utils.Config;
+import models.network.server.TCPServer;
 
 import java.io.IOException;
 import java.net.Socket;

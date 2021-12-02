@@ -1,6 +1,6 @@
-package models;
+package models.buisness;
 
-import enums.Commands;
+import models.enums.Commands;
 
 public class Request {
 

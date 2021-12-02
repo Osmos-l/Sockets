@@ -1,6 +1,6 @@
-package models;
+package models.network.client;
 
-import utils.Config;
+import main.Config;
 
 import java.io.IOException;
 

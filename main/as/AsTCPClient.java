@@ -1,8 +1,8 @@
-package client;
+package main.as;
 
 import models.ConsoleScanner;
-import models.TCPClient;
-import utils.Config;
+import models.network.client.TCPClient;
+import main.Config;
 
 import java.io.IOException;
 

@@ -1,6 +1,6 @@
-package utils;
+package models.utils;
 
-import models.ClientLogger;
+import models.network.client.ClientLogger;
 
 import javax.json.Json;
 import javax.json.JsonObject;

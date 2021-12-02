@@ -1,10 +1,8 @@
-package server;
+package models.buisness;
 
-import enums.TypeResponse;
-import models.Request;
-import models.RequestHandler;
-import models.UDPServer;
-import utils.Logger;
+import models.enums.TypeResponse;
+import models.network.server.UDPServer;
+import models.utils.Logger;
 
 import java.net.DatagramPacket;
 
@@ -29,7 +27,6 @@ public class AsUDPServer extends UDPServer {
 
     @Override
     public String onRequest(DatagramPacket receiver, String input) {
-        System.out.println("Request : " + input);
         String output;
         try {
             Request req = new Request(input);

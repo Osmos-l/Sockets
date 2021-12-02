@@ -1,6 +1,8 @@
-package server;
+package main.as;
 
-import utils.Config;
+import models.buisness.AsTCPServer;
+import models.buisness.AsUDPServer;
+import main.Config;
 
 import java.io.IOException;
 

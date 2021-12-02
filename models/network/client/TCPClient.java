@@ -1,6 +1,6 @@
-package models;
+package models.network.client;
 
-import enums.TypeResponse;
+import models.enums.TypeResponse;
 
 import java.io.BufferedReader;
 import java.io.IOException;

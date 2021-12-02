@@ -1,7 +1,7 @@
-package models;
+package models.buisness;
 
-import enums.TypeResponse;
-import utils.ListeAuth;
+import models.enums.TypeResponse;
+import models.utils.ListeAuth;
 
 /**
  * Traitement dynamiquement les requêtes d'authentification

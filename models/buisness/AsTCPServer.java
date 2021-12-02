@@ -1,10 +1,8 @@
-package server;
+package models.buisness;
 
-import enums.TypeResponse;
-import models.Request;
-import models.RequestHandler;
-import models.TCPServer;
-import utils.Logger;
+import models.enums.TypeResponse;
+import models.network.server.TCPServer;
+import models.utils.Logger;
 
 import java.net.Socket;
 

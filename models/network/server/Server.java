@@ -1,4 +1,4 @@
-package models;
+package models.network.server;
 
 import java.io.IOException;
 
