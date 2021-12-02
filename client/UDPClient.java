@@ -1,14 +1,13 @@
 package client;
 
-import models.Client;
 import utils.Config;
 
 import java.io.IOException;
 import java.net.*;
 
-public class UDPClient extends Client {
+public class UDPClient {
 
-    private DatagramSocket socket;
+   /* private DatagramSocket socket;
 
     private final byte[] tampon = new byte[1024];
 
@@ -17,14 +16,11 @@ public class UDPClient extends Client {
     private InetAddress destination;
 
     public UDPClient(int port) throws IOException {
-        super("UDP", port);
 
         start();
     }
 
-    @Override
     public void init() throws IOException {
-        super.init();
         socket = new DatagramSocket();
         receiver = new DatagramPacket(tampon, tampon.length);
         destination = InetAddress.getByName(getHost());
@@ -59,5 +55,5 @@ public class UDPClient extends Client {
 
     public static void main(String[] args) throws Exception {
         UDPClient UDPClient = new UDPClient(Config.getAsServerPort());
-    }
+    } */
 }
